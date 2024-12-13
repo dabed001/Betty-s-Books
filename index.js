@@ -3,6 +3,7 @@ var express = require ('express')
 var ejs = require('ejs')
 
 const expressSanitizer = require('express-sanitizer');
+const weather = require('./path/to/main'); 
 
 //Import mysql module
 var mysql = require('mysql2')
@@ -24,6 +25,7 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: true }))
 
 app.use(expressSanitizer());
+app.use('/', weather);
 
 // Set up public folder (for css and statis js)
 app.use(express.static(__dirname + '/public'))
