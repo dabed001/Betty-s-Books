@@ -2,12 +2,16 @@
 var express = require ('express')
 var ejs = require('ejs')
 
+const expressSanitizer = require('express-sanitizer');
+
 //Import mysql module
 var mysql = require('mysql2')
 
 //Import express session
 var session = require ('express-session')
 
+//Import express validator
+var validator = require ('express-validator');
 
 // Create the express application object
 const app = express()
@@ -18,6 +22,8 @@ app.set('view engine', 'ejs')
 
 // Set up the body parser 
 app.use(express.urlencoded({ extended: true }))
+
+app.use(expressSanitizer());
 
 // Set up public folder (for css and statis js)
 app.use(express.static(__dirname + '/public'))

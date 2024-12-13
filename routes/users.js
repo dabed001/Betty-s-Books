@@ -3,6 +3,8 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require('bcrypt')
 
+const { check, validationResult } = require('express-validator');
+
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
       res.redirect('./login') // redirect to the login page
@@ -11,15 +13,28 @@ const redirectLogin = (req, res, next) => {
     } 
 }
 
+const registerValidation = [
+    check('email').isEmail().withMessage('The email you entered is invalid, please try again'),
+    check('password').isLength({ min: 7 }).withMessage('Password must be minimum 7 characters long'),
+    check('username').not().isEmpty().withMessage('Username required'),
+    check('first').not().isEmpty().withMessage('First name required'),
+    check('last').not().isEmpty().withMessage('Last name required')
+];
+
+
 router.get('/register', function (req, res, next) {
     res.render('register.ejs')                                                               
 })    
 
-router.post('/registered', function (req, res, next) {
-    const userName = req.body.username;
-    const firstName = req.body.first;
-    const lastName = req.body.last;
-    const email = req.body.email;
+router.post('/registered', registerValidation, function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.redirect('./register'); }
+    else { 
+    const userName = req.sanitize(req.body.username);
+    const firstName = req.sanitize(req.body.first);
+    const lastName = req.sanitize(req.body.last);
+    const email = req.sanitize(req.body.email);
     const plainPassword = req.body.password;
     const saltRounds = 10;
 
@@ -43,6 +58,7 @@ router.post('/registered', function (req, res, next) {
 
         });
     });
+    }
 });
 
     router.get('/list', redirectLogin, function (req, res) {
