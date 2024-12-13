@@ -1,3 +1,4 @@
+// Creates a new router and express
 const express = require("express")
 const router = express.Router()
 
@@ -6,9 +7,9 @@ router.get('/search',function(req, res, next){
 })
 
 router.get('/search_result', function (req, res, next) {
-    // Search the database
-    let sqlquery = "SELECT * FROM books WHERE name LIKE '%" + req.query.search_text + "%'" // query database to get all the books
-    // execute sql query
+    // Search and queries the database to retrieve all books
+    let sqlquery = "SELECT * FROM books WHERE name LIKE '%" + req.query.search_text + "%'" 
+    // Execution
     db.query(sqlquery, (err, result) => {
         if (err) {
             next(err)
@@ -17,10 +18,10 @@ router.get('/search_result', function (req, res, next) {
      }) 
 })
 
-
+// Queries the database to retrieve all books
 router.get('/list', function(req, res, next) {
-    let sqlquery = "SELECT * FROM books" // query database to get all the books
-    // execute sql query
+    let sqlquery = "SELECT * FROM books" 
+    // Execution
     db.query(sqlquery, (err, result) => {
         if (err) {
             next(err)
@@ -34,16 +35,16 @@ router.get('/addbook', function (req, res, next) {
 })
 
 router.post('/bookadded', function (req, res, next) {
-    // saving data in database
+    // Saves input data in the database
     let sqlquery = "INSERT INTO books (name, price) VALUES (?,?)"
-    // execute sql query
+    // Execution
     let newrecord = [req.body.name, req.body.price]
     db.query(sqlquery, newrecord, (err, result) => {
         if (err) {
             next(err)
         }
         else
-            res.send(' This book is added to database, name: '+ req.body.name + ' price '+ req.body.price)
+            res.send(' This Book Has Been Added to the Database, Book Name: '+ req.body.name + ' Price '+ req.body.price)
     })
 }) 
 

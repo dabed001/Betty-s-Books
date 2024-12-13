@@ -1,9 +1,10 @@
+// Creates a new router and express
 const express = require("express")
 const router = express.Router()
 
 router.get('/books', function (req, res, next) {
 
-    // Query database to get all the books
+    // Queries database to retrieve all books
     let sqlquery = "SELECT * FROM bookds"
 
     const termSearch = req.query.search_term; 
@@ -11,9 +12,9 @@ router.get('/books', function (req, res, next) {
         {
             sqlQuery += ` WHERE title LIKE '%${termSearch}%' OR description LIKE '%${termSearch}%'`; 
         }
-    // Execute the sql query
+    // Execution
     db.query(sqlquery, (err, result) => {
-        // Return results as a JSON object
+        // Returning results as a JSON Object
         if (err) {
             res.json(err)
             next(err)
@@ -24,4 +25,5 @@ router.get('/books', function (req, res, next) {
     })
 })
 
+// Export the router object so index.js can access it
 module.exports = router

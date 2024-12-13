@@ -1,4 +1,4 @@
-// Create a new router
+// Create a new router, express and bcrypt
 const express = require("express")
 const router = express.Router()
 const bcrypt = require('bcrypt')
@@ -38,8 +38,8 @@ router.post('/registered', registerValidation, function (req, res) {
     const plainPassword = req.body.password;
     const saltRounds = 10;
 
+    // Stores hashed password in the database
     bcrypt.hash(plainPassword, saltRounds, function(err, hashedPassword) {
-        // Store hashed password in your database
         if (err) {
             return next(err);
         }
@@ -67,7 +67,7 @@ router.post('/registered', registerValidation, function (req, res) {
             if (err) {
                 return next(err);
             }
-            // Render the user list page, passing the user data
+            // Renders the user list page by passing the user data
             res.render("listUsers.ejs", {users: result});
         });
     });
@@ -84,7 +84,7 @@ router.post('/loggedin', function(req, res, next) {
         if (results.length > 0) {
             bcrypt.compare(password, results[0].hashedPassword, function(err, result) {
                 if (result) {
-                    // Save user session here, when login is successful
+                    // Saves user session when the login is successful
                     req.session.userId = req.body.username;
                     res.send('Successful Loginl!');
                 } else {
@@ -96,7 +96,6 @@ router.post('/loggedin', function(req, res, next) {
         }
     });
 });
-
 
 // Export the router object so index.js can access it
 module.exports = router

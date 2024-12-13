@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
   <head>
-    <title>Welcome to <%=shopData.shopName%></title>
+    <title>Available Books</title>
     <link rel="stylesheet"  type="text/css" href="/main.css" />
   </head>
   <body>
     <h1><%=shopData.shopName%> Shop</h1>
-    <h2>Here are the books that we sell:</h2>
+    <h2>The Books That We Currently Have For Sale Are:</h2>
     <ul>
       <% availableBooks.forEach(function(book) { %>
         <li><%= book.name %>, £<%=book.price%> </li>

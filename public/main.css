@@ -1,13 +1,13 @@
 h1 {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    color: darkcyan;
+    font-size: 25px;
+    color: rgb(1, 86, 86);
 }
 
 h2 {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    color: cadetblue;
+    font-size: 25px;
+    color: rgba(95, 158, 160, 0.521);
 }
 
 p,li {
@@ -15,14 +15,14 @@ p,li {
 }
 
 a:link {
-    color: orangered;
+    color: rgb(156, 0, 75);
     text-decoration: none;
     padding:5px;
   }
   
   /* visited link */
   a:visited {
-    color: tomato;
+    color: rgb(134, 0, 218);
     text-decoration: none;
     padding:5px;
   }
@@ -31,7 +31,7 @@ a:link {
   a:hover {
     color: white;
     text-decoration: none;
-    background-color: orangered;
+    background-color: rgb(203, 142, 253);
     padding:5px;
   }
   

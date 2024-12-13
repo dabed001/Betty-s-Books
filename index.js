@@ -2,6 +2,7 @@
 var express = require ('express')
 var ejs = require('ejs')
 
+// Create express sanitizer and weather path
 const expressSanitizer = require('express-sanitizer');
 const weather = require('./path/to/main'); 
 

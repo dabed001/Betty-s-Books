@@ -1,9 +1,9 @@
-// Create a new router
+// Creates a new router, express and request
 const express = require("express")
 const router = express.Router()
 const request = require('request');
 
-// Handle our routes
+// Handles our routes
 router.get('/logout', redirectLogin, (req,res) => {
     req.session.destroy(err => {
     if (err) {
@@ -13,6 +13,7 @@ router.get('/logout', redirectLogin, (req,res) => {
     })
 });
 
+// Route handler for weather
 router.get('/londonnow', redirectLogin, (req,res) => {
     let apiKey = 'f745ab43d346c872678e88b1e6edade3'
     let city = 'london'
@@ -24,7 +25,7 @@ router.get('/londonnow', redirectLogin, (req,res) => {
       } else {
             try {
             var currentWeather = JSON.parse(body);
-            // Check if the necessary data is available before trying to access it
+            // Checks if data is available before portraying
             if (currentWeather !== undefined && currentWeather.main !== undefined && currentWeather.name) {
                 var wmsg = 'It is currently ' + currentWeather.main.temp + 
                 ' degrees in ' + currentWeather.name +
@@ -32,15 +33,13 @@ router.get('/londonnow', redirectLogin, (req,res) => {
                 currentWeather.main.humidity;
                 res.send(wmsg);
             } else {
-                // Handle cases where the weather data is incomplete or missing
+                // Handles any cases where weather data cannot be found or is incomplete
                 res.send("No data found for the specified location.");
             }
         } catch (e) {
-            // Handle JSON parsing errors or other exceptions
+            // JSON handler for parsing errors or other exceptions
             res.send("Failed to parse weather data. Please try again later.");
         }
-
-
       } 
     });
 });
