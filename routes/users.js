@@ -37,14 +37,37 @@ router.post('/registered', function (req, res, next) {
     });
 });
 
-router.get('/list', function(req, res, next) {
-    let sqlQuery = "SELECT id, username, firstName, lastName, email FROM users";
-    db.query(sqlQuery, (err, result) => {
-        if (err) {
-            return next(err);
+    router.get('/list', function(req, res, next) {
+        let sqlQuery = "SELECT id, username, firstName, lastName, email FROM users";
+        db.query(sqlQuery, (err, result) => {
+            if (err) {
+                return next(err);
+            }
+            // Render the user list page, passing the user data
+            res.render("listUsers.ejs", {users: result});
+        });
+    });
+
+router.get('/login', function(req, res, next) {
+    res.render('login');
+});
+
+router.post('/loggedin', function(req, res, next) {
+    const { username, password } = req.body;
+    let sqlQuery = "SELECT hashedPassword FROM users WHERE username = ?";
+    db.query(sqlQuery, [username], function(err, results) {
+        if (err) return next(err);
+        if (results.length > 0) {
+            bcrypt.compare(password, results[0].hashedPassword, function(err, result) {
+                if (result) {
+                    res.send('Successful Loginl!');
+                } else {
+                    res.send('Login failed: Incorrect username or password.');
+                }
+            });
+        } else {
+            res.send('Failed Login: User Cannot Be Found.');
         }
-        // Render the user list page, passing the user data
-        res.render("listUsers.ejs", {users: result});
     });
 });
 
