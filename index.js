@@ -4,7 +4,7 @@ var ejs = require('ejs')
 
 // Create express sanitizer and weather path
 const expressSanitizer = require('express-sanitizer');
-const weather = require('./path/to/main'); 
+const weather = require("./routes/main"); 
 
 //Import mysql module
 var mysql = require('mysql2')
