@@ -2,7 +2,7 @@
 const express = require("express")
 const router = express.Router()
 const bcrypt = require('bcrypt')
-const expressSanitizer = require('express-sanitizer')
+const expressSanitizer = require('express-sanitizer');
 
 router.use(expressSanitizer());
 
@@ -10,11 +10,11 @@ const { check, validationResult } = require('express-validator');
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
-      res.redirect('./login') // Redirects to the login page
+      res.redirect('./login') //Redirects back to the login page
     } else { 
         next (); // Moves onto the next middleware
     } 
-}
+};
 
 const registerValidation = [
     check('email').isEmail().withMessage('The email you entered is invalid, please try again'),
