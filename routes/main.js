@@ -4,7 +4,7 @@ const router = express.Router()
 const request = require('request');
 
 // Handles our routes
-router.get('/logout', redirectLogin, (req,res) => {
+router.get('/logout', (req,res) => {
     req.session.destroy(err => {
     if (err) {
       return res.redirect('./')
@@ -14,7 +14,7 @@ router.get('/logout', redirectLogin, (req,res) => {
 });
 
 // Route handler for weather
-router.get('/londonnow', redirectLogin, (req,res) => {
+router.get('/londonnow', (req,res) => {
     let apiKey = 'f745ab43d346c872678e88b1e6edade3'
     let city = 'london'
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
