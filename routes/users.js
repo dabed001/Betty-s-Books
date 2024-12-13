@@ -3,6 +3,14 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require('bcrypt')
 
+const redirectLogin = (req, res, next) => {
+    if (!req.session.userId ) {
+      res.redirect('./login') // redirect to the login page
+    } else { 
+        next (); // move to the next middleware function
+    } 
+}
+
 router.get('/register', function (req, res, next) {
     res.render('register.ejs')                                                               
 })    
@@ -37,7 +45,7 @@ router.post('/registered', function (req, res, next) {
     });
 });
 
-    router.get('/list', function(req, res, next) {
+    router.get('/list', redirectLogin, function (req, res) {
         let sqlQuery = "SELECT id, username, firstName, lastName, email FROM users";
         db.query(sqlQuery, (err, result) => {
             if (err) {
@@ -48,7 +56,7 @@ router.post('/registered', function (req, res, next) {
         });
     });
 
-router.get('/login', function(req, res, next) {
+router.get('/login', redirectLogin, function(req, res, next) {
     res.render('login');
 });
 
@@ -60,6 +68,8 @@ router.post('/loggedin', function(req, res, next) {
         if (results.length > 0) {
             bcrypt.compare(password, results[0].hashedPassword, function(err, result) {
                 if (result) {
+                    // Save user session here, when login is successful
+                    req.session.userId = req.body.username;
                     res.send('Successful Loginl!');
                 } else {
                     res.send('Login failed: Incorrect username or password.');
