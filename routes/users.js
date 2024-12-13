@@ -1,7 +1,7 @@
 // Create a new router, express and bcrypt
 const express = require("express")
 const router = express.Router()
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
 const expressSanitizer = require('express-sanitizer');
 
 router.use(expressSanitizer());
